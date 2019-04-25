@@ -3,16 +3,15 @@ version: '3.6'
 services:
   bitcore:
     container_name: bitcore
-    image: nexus.sbisec.int:8442/klw0539/bitcore:latest
+    image: nexus.sbisec.int:8444/wallet/bitcore:4.1.0
     restart: always
-    environment:
-      - TZ=Asia/Tokyo
     ports:
       - 3001:3001
       - 8333
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - ./config/bitcore-node.json /src/bitcore-node.json:ro
       - /data/bitcore/data:/src/data
       - /data/bitcore/log:/src/log
-      - ./config/bitcore-node.json /src/bitcore-node.json:ro
       - ./node_modules:/usr/local/lib/node_modules
+    command: ["/bin/sh", "-c", "bitcored >> /src/log/bitcore.log 2>&1"]
