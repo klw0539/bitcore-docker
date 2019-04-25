@@ -8,9 +8,10 @@ services:
     environment:
       - TZ=Asia/Tokyo
     ports:
-      - 80:3001
+      - 3001:3001
       - 8333
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /data/bitcore/data:/src/data
       - /data/bitcore/log:/src/log
       - ./config/bitcore-node.json /src/bitcore-node.json:ro

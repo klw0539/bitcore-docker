@@ -1,13 +1,10 @@
 FROM node:8.16.0
-LABEL author='lingwei.kong'
 RUN \
-  apt-get update --force-yes -y && \
-  apt-get install -y --force-yes libzmq3-dev curl
-RUN npm install -g --unsafe-perm=true bitcore
+  apt-get update --allow -y && \
+  apt-get install --allow -y libzmq3-dev curl && \
+  rm -rf /var/lib/apt/lists/* /var/cache/debconf
+RUN npm install -g --unsafe-perm=true bitcore@4.1.0
 COPY . /src
 WORKDIR /src
-ARG TZ
-ENV TZ $TZ
-EXPOSE 3001
-EXPOSE 8333
-CMD ["bitcored",">>","/src/log/bitcore.log", "2>&1"]
+EXPOSE 3001 8333
+CMD ["/bin/sh", "-c", "bitcored >> /src/log/bitcore.log 2>&1"]
