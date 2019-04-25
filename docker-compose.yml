@@ -1,0 +1,18 @@
+version: '3.6'
+
+services:
+  bitcore:
+    container_name: bitcore
+    image: nexus.sbisec.int:8442/klw0539/bitcore:latest
+
+    restart: always
+    environment:
+      - TZ=Asia/Tokyo
+    ports:
+      - 80:3001
+      - 8333
+    volumes:
+      - /data/bitcore/data:/src/data
+      - /data/bitcore/log:/src/log
+      - ./config/bitcore-node.json /src/bitcore-node.json:ro
+      - node_modules:/usr/local/lib/node_modules:ro
